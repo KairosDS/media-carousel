@@ -85,6 +85,25 @@ export class MediaCarousel extends LitElement {
       visibleArrows: {
         type: Boolean,
       },
+
+      /**
+       * Icon arrow left
+       * @property
+       * @type {String}
+       */
+      iconLeft: {
+        type: String,
+      },
+
+      /**
+       * Icon arrow right
+       * @property
+       * @type {String}
+       */
+      iconRight: {
+        type: String,
+      },
+
 		};
 	}
 
@@ -93,21 +112,20 @@ export class MediaCarousel extends LitElement {
     this.media = [];
     this.mediaId = '';
     this.left = 0;
-    this.autorun = true;
-    this.time = 5000;
+    this.autorun = false;
+    this.time = 2000;
     this.visibleArrows =  false;
+    this.iconLeft = '../assets/left_arrow.svg';
+    this.iconRight = '../assets/right_arrow.svg'
 	}
   
   connectedCallback() {
     super.connectedCallback();
     this.media = [...this.querySelectorAll('LI > *')];
-    console.log(this.media)
+    
   }
 
   firstUpdated() {
-    this.media.map(element => {
-      element.style.backgroundColor = this.generateColor();
-    })
     this.container = this.shadowRoot.querySelector('.media-carousel__container');
     this.carousel = this.shadowRoot.querySelector('.media-carousel__list');
     //this.carouselMobile = this.shadowRoot.querySelector('.carousel__list-container')
@@ -122,39 +140,47 @@ export class MediaCarousel extends LitElement {
   }
 
   goNext() {
-   this.itemsWidth = this.shadowRoot.querySelector('.media-carousel__list-item').offsetWidth;
-   this.maxSlides = (this.container.offsetWidth / this.itemsWidth) * this.itemsWidth;
-    if (this.left + this.container.offsetWidth <= this.carousel.offsetWidth) {
-      this.disabledBack = false;
-      this.left += this.maxSlides;
-    }
-    if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) { 
-      this.media = this.media.concat(this.media);
-    }
+    this.itemsWidth = this.shadowRoot.querySelector('.media-carousel__list-item').offsetWidth;
+    this.maxSlides = (this.container.offsetWidth / this.itemsWidth) * this.itemsWidth;
+      if (this.left + this.container.offsetWidth <= this.carousel.offsetWidth) {
+        this.disabledBack = false;
+        this.left += this.maxSlides;
+      }
+      if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) { 
+        this.media = this.media.concat(this.media);
+      }
   }
 
-  generateColor(){
-    var symbol, color;
-    symbol = "0123456789ABCDEF";
-    color = "#";
-  
-    for(var i = 0; i < 6; i++){
-      color = color + symbol[Math.floor(Math.random() * 16)];
-    }
-    return color;
+
+  goPrev() {
   }
 
   render() {
     return html`
-    <div class="media-carousel__container">
-      <div class="media-carousel__wrapper" style="left:-${this.left}px">
-        <ul class="media-carousel__list">
-          ${this.media.map(element => html`
-            <li class="media-carousel__list-item">${element}</li>
-          `)}
-        </ul>
+    <div class="media-carousel__content">
+      ${!this.autorun ? html `
+      <button 
+        class="media-carousel__button" 
+        type="button"
+        @click="${this.goPrev}">
+        <img class="media-carousel__arrow media-carousel__arrow--left" src="${this.iconLeft}"/>
+      </button>
+      ` : ''}
+      <div class="media-carousel__container">
+        <div class="media-carousel__wrapper" style="left:-${this.left}px">
+          <ul class="media-carousel__list">
+            ${this.media.map(element => html`
+              <li class="media-carousel__list-item">${element.innerHTML}</li>
+            `)}
+          </ul>
+        </div>
+      </div>
+      ${!this.autorun ? html `
+      <button class="media-carousel__button" @click="${this.goNext}">
+        <img class="media-carousel__arrow media-carousel__arrow--right" src="${this.iconRight}"/>
+      </button>
+      ` : ''}
     </div>
-  </div>
     `;
   }
 }
