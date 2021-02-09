@@ -35,7 +35,7 @@ export const wcNameStyles = css`
   }
 
   li{
-    width: 200px;
+    width: 300px;
     height: 100px;
     border: 3px solid #b8f2e6;
   }
@@ -47,6 +47,18 @@ export const wcNameStyles = css`
 
   .media-carousel__arrow {
     width: 20px;
+  }
+
+  .media-carousel__button:disabled .media-carousel__arrow {
+    opacity: 0.4;
+  }
+
+  .media-carousel__button:hover .media-carousel__arrow {
+    filter: invert(0.36) sepia(1) saturate(20) hue-rotate(327.6deg) brightness(0.99);
+  }
+
+  .media-carousel__button:focus {
+   outline:0;
   }
 
 
