@@ -50,8 +50,8 @@ export const wcNameStyles = css`
     width: 20px;
   }
 
-  .media-carousel__button:disabled .media-carousel__arrow {
-    opacity: 0.4;
+  .media-carousel__button[disabled] .media-carousel__arrow {
+    opacity: 0.2;
   }
 
   .media-carousel__button:hover .media-carousel__arrow {

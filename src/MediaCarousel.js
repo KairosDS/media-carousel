@@ -212,7 +212,6 @@ export class MediaCarousel extends LitElement {
       this.disabledNext = true;
         }
       if (this.left + this.container.offsetWidth <= this.carousel.offsetWidth) {
-        //this.disabledBack = false;
         this.left += this.maxSlides;
       }
       if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) { 
@@ -267,7 +266,7 @@ export class MediaCarousel extends LitElement {
       ${!this.autorun ? html `
       <!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
       <div
-        .disabled="${this.disabledPrevious}"
+        ?disabled="${this.disabledPrevious}"
         class="media-carousel__button${this.master ? '' : ' hidden'}" 
         type="button"
         @click="${this.goPrev}"
@@ -286,8 +285,8 @@ export class MediaCarousel extends LitElement {
       </div>
       ${!this.autorun ? html `
       <!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
-      <div 
-        .disabled="${this.disabledNext}"
+      <div
+        ?disabled="${this.disabledNext}"
         class="media-carousel__button ${this.master ? '' : 'hidden'}" 
         @click="${this.goNext}"
         type="button"
