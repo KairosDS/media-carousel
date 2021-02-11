@@ -43,6 +43,7 @@ export const wcNameStyles = css`
   .media-carousel__button {
     background-color: transparent;
     border: none;
+    display: flex;
   }
 
   .media-carousel__arrow {
@@ -58,7 +59,11 @@ export const wcNameStyles = css`
   }
 
   .media-carousel__button:focus {
-   outline:0;
+    outline:0;
+  }
+
+  .hidden {
+    visibility: hidden;
   }
 
 
