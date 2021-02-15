@@ -26,12 +26,14 @@ export const wcNameStyles = css`
   }
 
   .media-carousel__list {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
     overflow-x: hidden;
     overflow-y: hidden;
     list-style: none;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-columns: 100px 100px;
+    grid-auto-flow: column;
+    grid-gap: 10px;
   }
 
   li{
@@ -70,8 +72,12 @@ export const wcNameStyles = css`
 
 
 
-  @media all and (min-width: 1024px) {
-   
+  @media all and (min-width: 768px) {
+    .media-carousel__list {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+  }
   }
   @media all and (min-width: 1280px) {
    

@@ -95,7 +95,7 @@ export class MediaCarousel extends LitElement {
         type: String,
       },
 
-        /**
+      /**
        * The next arrow button is disabled when there are no next elements
        * @property
        * @type { Boolean }
@@ -139,7 +139,7 @@ export class MediaCarousel extends LitElement {
        */
       showArrows: {
         type: Boolean,
-      },
+      }
 		};
 	}
 
@@ -162,26 +162,17 @@ export class MediaCarousel extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.media = [...this.querySelectorAll('LI > *')]
-
     if (this.masterId !== '') {
       document.addEventListener('nextitemforlinked', this.goToNextElement.bind(this));
       document.addEventListener('previtemforlinked', this.goToPrevElement.bind(this));
-
     }
-  
   }
 
   firstUpdated() {
     this.container = this.shadowRoot.querySelector('.media-carousel__container');
     this.carousel = this.shadowRoot.querySelector('.media-carousel__list');
-    //this.carouselMobile = this.shadowRoot.querySelector('.carousel__list-container')
-
     if (this.autorun) {
-      if(window.innerWidth < 768){
-        this._intervalId = setInterval(this.goNextMobile.bind(this), this.time);
-      }else{
         this._intervalId = setInterval(this.goNext.bind(this), this.time);
-      }
     }
   }
 
@@ -189,20 +180,19 @@ export class MediaCarousel extends LitElement {
     super.disconnectedCallback();
     document.removeEventListener('nextitemforlinked', this.goToNextElement.bind(this));
     document.removeEventListener('previtemforlinked', this.goToPrevElement.bind(this));
-
   }
 
   goNext(ev) {
     if(!this.autorun){
-    if (this.master) {
-      let nextEvent = new CustomEvent('nextitemforlinked', {
-        detail: {
-          masterid: this.id,
-        }
-      });
-      document.dispatchEvent(nextEvent);
+      if (this.master) {
+        let nextEvent = new CustomEvent('nextitemforlinked', {
+          detail: {
+            masterid: this.id,
+          }
+        });
+        document.dispatchEvent(nextEvent);
+      }
     }
-  }
     this.itemsWidth = this.shadowRoot.querySelector('.media-carousel__list-item').offsetWidth;
     this.maxSlides = (this.container.offsetWidth / this.itemsWidth) * this.itemsWidth;
     if(this.disabledPrevious){
@@ -210,14 +200,14 @@ export class MediaCarousel extends LitElement {
     }
     if(this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth){
       this.disabledNext = true;
-        }
-      if (this.left + this.container.offsetWidth <= this.carousel.offsetWidth) {
-        this.left += this.maxSlides;
+    }
+    if (this.left + this.container.offsetWidth <= this.carousel.offsetWidth) {
+      this.left += this.maxSlides;
+    }
+    if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) { 
+      if(this.autorun) {
+        this.media = this.media.concat(this.media);
       }
-      if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) { 
-        if(this.autorun) {
-          this.media = this.media.concat(this.media);
-        }
     }
   }
 
@@ -239,7 +229,6 @@ export class MediaCarousel extends LitElement {
     }
     if(this.container.offsetWidth - this.left == 0) {
       this.disabledPrevious = true;
-
     }
     if (this.container.offsetWidth - this.left <= 0) {
       this.left -= this.maxSlides;
@@ -267,11 +256,11 @@ export class MediaCarousel extends LitElement {
       <!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
       <div
         ?disabled="${this.disabledPrevious}"
-        class="media-carousel__button${this.master ? '' : ' hidden'}" 
+        class="media-carousel__button${this.master || !this.autorun ? '' : ' hidden'}" 
         type="button"
         @click="${this.goPrev}"
         aria-label="Go to previous element">
-        <img class="media-carousel__arrow media-carousel__arrow--left"  src="${this.iconLeft}"/>
+        <img class="media-carousel__arrow media-carousel__arrow--left"  src="${this.iconLeft}" alt="arrow left"/>
       </div>
       ` : ''}
       <div class="media-carousel__container">
@@ -287,16 +276,14 @@ export class MediaCarousel extends LitElement {
       <!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
       <div
         ?disabled="${this.disabledNext}"
-        class="media-carousel__button ${this.master ? '' : 'hidden'}" 
+        class="media-carousel__button ${this.master || !this.autorun ? '' : 'hidden'}" 
         @click="${this.goNext}"
         type="button"
         aria-label="Go to next element">
-        <img class="media-carousel__arrow media-carousel__arrow--right" src="${this.iconRight}"/>
+        <img class="media-carousel__arrow media-carousel__arrow--right" src="${this.iconRight}" alt="arrow right"/>
       </div>
       ` : ''}
     </div>
     `;
   }
 }
-
-// window.customElements.define('media-carousel', MediaCarousel)
