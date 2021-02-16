@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit-element';
 import { wcNameStyles } from './media-carousel-style';
 
+const GAP_ITEMS = 50;
 /**
  * `media-carousel`
  * MediaCarousel
@@ -149,7 +150,7 @@ export class MediaCarousel extends LitElement {
     this.mediaId = '';
     this.left = 0;
     this.autorun = false;
-    this.time = 2000;
+    this.time = 4000;
     this.iconLeft = '../assets/left_arrow.svg';
     this.iconRight = '../assets/right_arrow.svg'
     this.disabledNext = false;
@@ -202,7 +203,7 @@ export class MediaCarousel extends LitElement {
       this.disabledNext = true;
     }
     if (this.left + this.container.offsetWidth <= this.carousel.offsetWidth) {
-      this.left += this.maxSlides;
+      this.left += this.container.offsetWidth + GAP_ITEMS;
     }
     if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) { 
       if(this.autorun) {
@@ -267,7 +268,7 @@ export class MediaCarousel extends LitElement {
         <div class="media-carousel__wrapper" style="left:-${this.left}px">
           <ul class="media-carousel__list">
             ${this.media.map((element, i) => html`
-              <li class="media-carousel__list-item" id="${i++}">${element.innerHTML}</li>
+              <li class="media-carousel__list-item" style="background-color: rgb(${i}, 1${i}, 2${i})" id="${i++}">${element.innerHTML}</li>
             `)}
           </ul>
         </div>

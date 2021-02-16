@@ -3,15 +3,18 @@ import { css } from 'lit-element';
 export const wcNameStyles = css`
   :host {
     display: block;
-    width: 90vw;
+    margin: 0;
+    width: 100%;
   }
 
   .media-carousel__content {
     display: flex;
+    justify-content: center;
+    text-align: center;
   }
 
   .media-carousel__container {
-    width: calc(1200px);
+    width: 298px;
     align-items: center;
     display: flex;
     justify-content: space-between;
@@ -30,16 +33,21 @@ export const wcNameStyles = css`
     overflow-y: hidden;
     list-style: none;
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-auto-columns: 100px 100px;
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-columns: auto auto;
     grid-auto-flow: column;
-    grid-gap: 10px;
-  }
+    /* grid-row-gap: 50px; */
+    grid-gap: 50px;
+    min-width: 298px;
+    margin: 0px;
+    padding: 0px 0px;
+  } 
+
 
   li{
-    width: 300px;
-    height: 100px;
-    border: 3px solid #b8f2e6;
+    width: 124px;
+    height: 45px;
+   /* border: 3px solid #b8f2e6;*/
   }
 
   .media-carousel__button {
@@ -57,7 +65,7 @@ export const wcNameStyles = css`
   }
 
   .media-carousel__button:hover .media-carousel__arrow {
-    filter: invert(0.36) sepia(1) saturate(20) hue-rotate(327.6deg) brightness(0.99);
+    filter: invert(60%) sepia(80%) saturate(3787%) hue-rotate(359deg) brightness(101%) contrast(107%);
   }
 
   .media-carousel__button:focus {
