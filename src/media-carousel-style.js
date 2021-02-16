@@ -76,6 +76,11 @@ export const wcNameStyles = css`
     visibility: hidden;
   }
 
+  img {
+        width: 124px;
+        height: 45px;
+      }
+
 
 
 

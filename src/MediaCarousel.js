@@ -147,6 +147,7 @@ export class MediaCarousel extends LitElement {
 	constructor() {
     super();
     this.media = [];
+    this.items = [];
     this.mediaId = '';
     this.left = 0;
     this.autorun = false;
@@ -162,7 +163,17 @@ export class MediaCarousel extends LitElement {
   
   connectedCallback() {
     super.connectedCallback();
-    this.media = [...this.querySelectorAll('LI > *')]
+    this.media = [...this.querySelectorAll('LI > *')];
+    this.media.map(element => {
+      let item = {
+      };
+      item.label = element.tagName;
+      item.source = element.getAttribute('src');
+      item.link = element.getAttribute('href');
+      item.textContent = element.innerHTML != '' ? element.innerHTML : element;
+      console.log(item,'item')
+      this.items.push(item);
+    })
     if (this.masterId !== '') {
       document.addEventListener('nextitemforlinked', this.goToNextElement.bind(this));
       document.addEventListener('previtemforlinked', this.goToPrevElement.bind(this));
@@ -207,7 +218,7 @@ export class MediaCarousel extends LitElement {
     }
     if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) { 
       if(this.autorun) {
-        this.media = this.media.concat(this.media);
+        this.items = this.items.concat(this.items);
       }
     }
   }
@@ -267,8 +278,10 @@ export class MediaCarousel extends LitElement {
       <div class="media-carousel__container">
         <div class="media-carousel__wrapper" style="left:-${this.left}px">
           <ul class="media-carousel__list">
-            ${this.media.map((element, i) => html`
-              <li class="media-carousel__list-item" style="background-color: rgb(${i}, 1${i}, 2${i})" id="${i++}">${element.innerHTML}</li>
+            ${this.items.map((element, i) => html`
+              <li class="media-carousel__list-item" id="${i++}">
+              ${element.label == 'IMG' ? html `<img src="${element.source}" href="${element.link}" />` : html `<p>${element.textContent}</p>` }
+            </li>
             `)}
           </ul>
         </div>
