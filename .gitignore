@@ -2,3 +2,6 @@
 *.polymer
 /build/
 /dist/
+
+## testing
+/coverage/

@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { html, fixture, expect } from "@open-wc/testing";
-import "../kw-languages";
+import { expect, fixture, html } from '@open-wc/testing';
+import "../media-carousel";
 
-describe("KwLanguages", () => {
+describe("MediaCarousel", () => {
   it("should have the basic template", async () => {
     const el = await fixture(
       html`
-        <kw-languages></kw-languages>
+        <media-carousel></media-carousel>
       `
     );
-    const base = el.shadowRoot.querySelector(".kw-languages");
+    const base = el.shadowRoot.querySelector(".media-carousel");
 
     expect(base).not.to.be.null;
     expect(el).dom.to.equalSnapshot();
