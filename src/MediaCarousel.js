@@ -170,8 +170,8 @@ export class MediaCarousel extends LitElement {
       item.label = element.tagName;
       item.source = element.getAttribute('src');
       item.link = element.getAttribute('href');
+      item.alt = element.getAttribute('alt')
       item.textContent = element.innerHTML != '' ? element.innerHTML : element;
-      console.log(item,'item')
       this.items.push(item);
     })
     if (this.masterId !== '') {
@@ -264,23 +264,19 @@ export class MediaCarousel extends LitElement {
   render() {
     return html`
     <div class="media-carousel__content">
-      ${!this.autorun ? html `
-      <!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
-      <div
-        ?disabled="${this.disabledPrevious}"
-        class="media-carousel__button${this.master || !this.autorun ? '' : ' hidden'}" 
-        type="button"
-        @click="${this.goPrev}"
-        aria-label="Go to previous element">
-        <img class="media-carousel__arrow media-carousel__arrow--left"  src="${this.iconLeft}" alt="arrow left"/>
-      </div>
-      ` : ''}
       <div class="media-carousel__container">
         <div class="media-carousel__wrapper" style="left:-${this.left}px">
-          <ul class="media-carousel__list">
+          <ul class="${this.autorun ? 'media-carousel__list--autorun' : 'media-carousel__list--manual'} media-carousel__list">
             ${this.items.map((element, i) => html`
               <li class="media-carousel__list-item" id="${i++}">
-              ${element.label == 'IMG' ? html `<img src="${element.source}" href="${element.link}" />` : html `<p>${element.textContent}</p>` }
+              ${element.label == 'IMG' ? html `
+                <img 
+                  src="${element.source}" 
+                  href="${element.link}" 
+                  alt="${element.alt}"/>` 
+                : html `
+                <p>${element.textContent}</p>`
+              }
             </li>
             `)}
           </ul>
@@ -289,8 +285,19 @@ export class MediaCarousel extends LitElement {
       ${!this.autorun ? html `
       <!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
       <div
+        ?disabled="${this.disabledPrevious}"
+        class="media-carousel__button${this.master && !this.autorun ? '' : ' hidden'}" 
+        type="button"
+        @click="${this.goPrev}"
+        aria-label="Go to previous element">
+        <img class="media-carousel__arrow media-carousel__arrow--left"  src="${this.iconLeft}" alt="arrow left"/>
+      </div>
+      ` : ''}
+      ${!this.autorun ? html `
+      <!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
+      <div
         ?disabled="${this.disabledNext}"
-        class="media-carousel__button ${this.master || !this.autorun ? '' : 'hidden'}" 
+        class="media-carousel__button ${this.master && !this.autorun ? '' : 'hidden'}" 
         @click="${this.goNext}"
         type="button"
         aria-label="Go to next element">

@@ -7,6 +7,8 @@ export const wcNameStyles = css`
     width: 100%;
   }
 
+/* AUTORUN CAROUSEL MOBILE */
+
   .media-carousel__content {
     display: flex;
     justify-content: center;
@@ -33,6 +35,10 @@ export const wcNameStyles = css`
     overflow-y: hidden;
     list-style: none;
     display: grid;
+  }
+
+  .media-carousel__list--autorun {
+
     grid-template-rows: repeat(2, 1fr);
     grid-auto-columns: auto auto;
     grid-auto-flow: column;
@@ -43,11 +49,19 @@ export const wcNameStyles = css`
     padding: 0px 0px;
   } 
 
+  .media-carousel__list--manual {
+    grid-template-rows: 1fr;
+    grid-auto-columns: auto auto auto;
+    grid-auto-flow: column;
+    /* grid-row-gap: 50px; */
+    grid-gap: 15px;
+  }
 
-  li{
+
+
+  .media-carousel__list-item{
     width: 124px;
     height: 45px;
-   /* border: 3px solid #b8f2e6;*/
   }
 
   .media-carousel__button {
@@ -77,13 +91,15 @@ export const wcNameStyles = css`
   }
 
   img {
-        width: 124px;
-        height: 45px;
-      }
+    width: 124px;
+    height: 45px;
+  }
 
+  /* MANUAL MOBILE CAROUSEL */
 
-
-
+  .media-carousel__content {
+    align-items: center;
+  }
 
   @media all and (min-width: 768px) {
     .media-carousel__list {
@@ -92,6 +108,7 @@ export const wcNameStyles = css`
    align-items: center;
   }
   }
+  
   @media all and (min-width: 1280px) {
    
   }
