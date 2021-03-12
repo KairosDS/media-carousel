@@ -149,7 +149,16 @@ export class MediaCarousel extends LitElement {
 			 */
 			index: {
 				type: Number,
-			},
+      },
+
+       /**
+			 * Max index of array
+			 * @property
+			 * @type { number }
+			 */
+			maxIndexOfArray: {
+				type: Number,
+      }
 		};
 	}
 
@@ -169,7 +178,8 @@ export class MediaCarousel extends LitElement {
 		this.masterId = '';
 		this.index = 0;
 		this.maxIndex = 3;
-		this.showArrows = true;
+    this.showArrows = true;
+    this.maxIndexOfArray = 0;
 	}
 
 	connectedCallback() {
@@ -203,7 +213,24 @@ export class MediaCarousel extends LitElement {
 		this.carousel = this.shadowRoot.querySelector('.media-carousel__list');
 		if (this.autorun) {
 			this._intervalId = setInterval(this.goNext.bind(this), this.time);
-		}
+    }
+
+    if(this.master) {
+      var mediaCarousels = document.getElementsByTagName("media-carousel");
+      var mySlave = null;
+      var myId = this.id;
+      for( let element of mediaCarousels){
+        if(element.getAttribute('master-id') == myId){
+          mySlave = element;
+        }
+      }
+      if(mySlave != null){
+        this.maxIndexOfArray = mySlave.querySelectorAll('li').length - 1;
+      }
+    }
+    else if(this.masterId != ''){
+      this.maxIndexOfArray = this.items.length - 1;
+    }
 	}
 
 	disconnectedCallback() {
@@ -237,19 +264,19 @@ export class MediaCarousel extends LitElement {
 			this.disabledPrevious = false;
 		}
 		if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) {
-			if(!this.master){
-        this.disabledNext = true;
-      }
       if (this.autorun) {
 				this.items = this.items.concat(this.items);
-			}
+      }
 		}
 		if (this.left + this.container.offsetWidth <= this.carousel.offsetWidth) {
 			this.left += this.container.offsetWidth + GAP_ITEMS;
-		}
+    }
 		if (this.master || this.masterId != '') {
-      if(this.index < this.items.length-1){
+      if(this.index < this.items.length-1 && this.maxIndexOfArray > this.index){
       this.index++;
+      }
+      if(this.index == this.items.length-1 || this.maxIndexOfArray == this.index){
+        this.disabledNext = true;
       }
       this.left = 0;
     }
@@ -286,6 +313,9 @@ export class MediaCarousel extends LitElement {
 			if (this.index > 0) {
         this.index--;
       }
+      if(this.index == 0) {
+        this.disabledPrevious = true;
+      }
       this.left = 0;
     }
   }
@@ -293,6 +323,7 @@ export class MediaCarousel extends LitElement {
 	goToNextElement(ev) {
 		let masterId = ev.detail.masterid;
 		if (masterId === this.masterId) {
+
 			this.shadowRoot.querySelector('.media-carousel__arrow--right').click();
     }
   }
@@ -323,7 +354,7 @@ export class MediaCarousel extends LitElement {
             ${this.items.slice(this.index, this.master ? this.index + this.maxIndex : this.index + 1)
             .map(
 										(element, i) => html`
-											<li class="media-carousel__list-item" id="${i++}">
+											<li class="media-carousel__list-item media-carousel__list-item--${i++}" id="${i++}">
 												${element.label == 'IMG'
                           ? html` 
                             <img
