@@ -1,14 +1,34 @@
 import { css } from 'lit-element';
 
+/**
+ * @cssproperty --text-color
+ * @cssproperty --font-family
+ * @cssproperty --font-size-s
+ * @cssproperty --font-size-m
+ */
+
 export const wcNameStyles = css`
 	:host {
+    --text-color: #464545;
+    --font-family: 'Poppins';
+		--font-size-s: 14px;
+		--font-size-m: 28px;
 		display: block;
 		margin: 0;
 		width: 100%;
+		font-family: var(--font-family);
+	}
+
+	:host([master-id]) {
+		max-width: 385px;
+	}
+
+	:host([master]) {
+		max-width: 375px;
+		margin-left: 15px
 	}
 
 	/* AUTORUN CAROUSEL MOBILE */
-
 	.media-carousel__content {
 		display: flex;
 		justify-content: center;
@@ -30,12 +50,10 @@ export const wcNameStyles = css`
 		transition: left ease 0.8s;
 	}
 
-
   .media-carousel__wrapper--master-id {
     height: 100%;
 		position: relative;
   }
- 
 
 	.media-carousel__list {
 		overflow-x: hidden;
@@ -48,7 +66,6 @@ export const wcNameStyles = css`
 		grid-template-rows: repeat(2, 1fr);
 		grid-auto-columns: auto auto;
 		grid-auto-flow: column;
-		/* grid-row-gap: 50px; */
 		grid-gap: 50px;
 		min-width: 298px;
 		margin: 0px;
@@ -74,17 +91,12 @@ export const wcNameStyles = css`
 		opacity: 0.2;
 	}
 
-	/* .media-carousel__button:hover .media-carousel__arrow {
-		filter: invert(60%) sepia(80%) saturate(3787%) hue-rotate(359deg)
-			brightness(101%) contrast(107%);
-	} */
-
 	.media-carousel__button:focus {
 		outline: 0;
 	}
 
 	.hidden {
-		visibility: hidden;
+		display: none;
 	}
 
 	img {
@@ -93,24 +105,22 @@ export const wcNameStyles = css`
 	}
 
 	/* MANUAL MOBILE CAROUSEL */
-
 	.media-carousel__content {
 		align-items: center;
 	}
 
-
-		:host([master-id]) .media-carousel__container {
-			width: 100%;
-		}
+	:host([master-id]) .media-carousel__container {
+		width: 100%;
+	}
 
 	.media-carousel__list--manual.media-carousel__list--master {
 		display: flex;
 		flex-direction: row;
 		font-weight: 800;
-		font-size: 28px;
+		font-size: var(--font-size-m);
 		line-height: 31px;
 		margin-right: 15px;
-		color: #464545;
+		color: var(--text-color);
 		padding: 0;
 		margin: 0;
 	}
@@ -158,12 +168,13 @@ export const wcNameStyles = css`
 	}
 
 	.media-carousel__list--master-id .media-carousel__list-item p {
-		font-size: 14px;
+		font-size: var(--font-size-s);
     line-height: 24px;
-    color: #727272;
+    color: var(--text-color);
     margin-top: 31px;
     margin: 0;
 		text-align: initial;
+    margin-left: 15px;
 	}
 
 	.media-carousel__list--manual.media-carousel__list--master-id.media-carousel__list .media-carousel__list-item p {
@@ -190,6 +201,19 @@ export const wcNameStyles = css`
 		}
 	}
 
-	@media all and (min-width: 1280px) {
+	@media all and (min-width: 768px) {
+
+		.media-carousel__list-item img{
+			width: 200px;
 	}
+
+	:host([autorun]) .media-carousel__content {
+		width: 950px;
+	}
+
+	:host([autorun]) {
+		display: flex;
+    justify-content: center;
+	}
+
 `;
