@@ -151,7 +151,7 @@ export class MediaCarousel extends LitElement {
 				type: Number,
       },
 
-       /**
+      /**
 			 * Max index of array
 			 * @property
 			 * @type { number }
@@ -179,7 +179,7 @@ export class MediaCarousel extends LitElement {
 		this.index = 0;
 		this.maxIndex = 3;
     this.showArrows = true;
-    this.maxIndexOfArray = 0;
+		this.maxIndexOfArray = 0;
 	}
 
 	connectedCallback() {
@@ -195,24 +195,17 @@ export class MediaCarousel extends LitElement {
 			this.items.push(item);
     });
 		if (this.masterId !== '') {
-			document.addEventListener(
-				'nextitemforlinked',
-				this.goToNextElement.bind(this)
-			);
-			document.addEventListener(
-				'previtemforlinked',
-				this.goToPrevElement.bind(this)
-			);
+			document.addEventListener('nextitemforlinked',this._goToNextElement.bind(this));
+			document.addEventListener('previtemforlinked',this._goToPrevElement.bind(this));
 		}
 	}
 
 	firstUpdated() {
-		this.container = this.shadowRoot.querySelector(
-			'.media-carousel__container'
-		);
+		this.container = this.shadowRoot.querySelector('.media-carousel__container');
 		this.carousel = this.shadowRoot.querySelector('.media-carousel__list');
+		
 		if (this.autorun) {
-			this._intervalId = setInterval(this.goNext.bind(this), this.time);
+			this._intervalId = setInterval(this._goNext.bind(this), this.time);
     }
 
     if(this.master) {
@@ -220,115 +213,230 @@ export class MediaCarousel extends LitElement {
       var mySlave = null;
       var myId = this.id;
       for( let element of mediaCarousels){
-        if(element.getAttribute('master-id') == myId){
+        if (element.getAttribute('master-id') == myId) {
           mySlave = element;
         }
       }
-      if(mySlave != null){
+      if (mySlave != null) {
         this.maxIndexOfArray = mySlave.querySelectorAll('li').length - 1;
-      }
+			} else {
+				this.maxIndexOfArray = this.items.length - 1;
+			}
     }
-    else if(this.masterId != ''){
+    else if (this.masterId != '') {
       this.maxIndexOfArray = this.items.length - 1;
     }
 	}
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
-		document.removeEventListener(
-			'nextitemforlinked',
-			this.goToNextElement.bind(this)
-		);
-		document.removeEventListener(
-			'previtemforlinked',
-			this.goToPrevElement.bind(this)
-		);
-  }
-  
-	goNext(ev) {
-		if (!this.autorun) {
-			if (this.master) {
-        let nextEvent = new CustomEvent('nextitemforlinked', {
-					detail: {
-						masterid: this.id,
-					},
-				});
-				document.dispatchEvent(nextEvent);
-			}
-		}
-    
-		this.itemsWidth = this.shadowRoot.querySelector('.media-carousel__list-item').offsetWidth;
-    this.maxSlides = (this.container.offsetWidth / this.itemsWidth) * this.itemsWidth;
-    
-    if (this.disabledPrevious) {
-			this.disabledPrevious = false;
-		}
-		if (this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth) {
-      if (this.autorun) {
-				this.items = this.items.concat(this.items);
-      }
-		}
-		if (this.left + this.container.offsetWidth <= this.carousel.offsetWidth) {
-			this.left += this.container.offsetWidth + GAP_ITEMS;
-    }
-		if (this.master || this.masterId != '') {
-      if(this.index < this.items.length-1 && this.maxIndexOfArray > this.index){
-      this.index++;
-      }
-      if(this.index == this.items.length-1 || this.maxIndexOfArray == this.index){
-        this.disabledNext = true;
-      }
-      this.left = 0;
-    }
+		document.removeEventListener('nextitemforlinked',this._goToNextElement.bind(this));
+		document.removeEventListener('previtemforlinked',this._goToPrevElement.bind(this));
 	}
 
-	goPrev() {
-		if (!this.autorun) {
-			if (this.master) {
-				let prevEvent = new CustomEvent('previtemforlinked', {
-					detail: {
-						masterid: this.id,
-					},
-				});
-				document.dispatchEvent(prevEvent);
-			}
-    }
-    
-    this.itemsWidth = this.shadowRoot.querySelector(
-			'.media-carousel__list-item'
-    ).offsetWidth;
-    this.maxSlides =
-			(this.container.offsetWidth / this.itemsWidth) * this.itemsWidth;
-    
-    if (this.disabledNext) {
-			this.disabledNext = false;
+	/**
+   * Event for move to next item
+   *
+   * @method
+   * @name _handleNextEvent
+   */
+	_handleNextEvent(){
+		let nextEvent = new CustomEvent('nextitemforlinked', {
+			detail: {
+				masterid: this.id,
+			},
+		});
+		document.dispatchEvent(nextEvent);
+	}
+	
+	/**
+   * Go to next item of carousel
+   *
+   * @method
+   * @name _goNext
+   */
+	_goNext() {
+		this.itemsWidth = this._getItemsWidth();
+		this.maxSlides = this._getMaxSlides();
+
+		if (this.master) {
+		this._handleNextEvent();
 		}
-		if (this.container.offsetWidth - this.left == 0) {
+		
+		if (this.master || this.masterId != '') {
+      if(this._isIndexMinorOfMaxIndex()){
+      this.index++;
+      }
+			
+			this.disabledNext = this._isIndexEqualMaxIndex();
+			
+			if (this.disabledPrevious) {
+				this.disabledPrevious = false;
+			}
+		}
+
+		if (this.autorun) {
+			if (this._isEndOfArray()){
+				this.items = this.items.concat(this.items);
+			}
+			if (this._isLeftMinorOfCarousel) {
+				this.left += this.container.offsetWidth + GAP_ITEMS;
+			}
+		}
+	}
+
+	/**
+   * Checked if index is equal of maxIndex
+   *
+   * @method
+   * @name _isIndexEqualMaxIndex
+	 * @returns {Boolean}
+   */
+	_isIndexEqualMaxIndex(){
+		return this.index == this.items.length-1 || this.maxIndexOfArray == this.index;
+	}
+
+		/**
+   * Checked if index is minor of maxIndex
+   *
+   * @method
+   * @name _isIndexEqualMaxIndex
+	 * @returns {Boolean}
+   */
+	_isIndexMinorOfMaxIndex(){
+		return this.index < this.items.length-1 && this.maxIndexOfArray > this.index;
+	}
+
+	/**
+   * Checked if is the end of array
+   *
+   * @method
+   * @name _isEndOfArray
+	 * @returns {Boolean}
+   */
+	_isEndOfArray(){
+		return this.left + this.container.offsetWidth >= this.carousel.offsetWidth - this.container.offsetWidth;
+	}
+
+	/**
+   * Checked if is left is minor of carousel
+   *
+   * @method
+   * @name _isLeftMinorOfCarousel
+	 * @returns {Boolean}
+   */
+	_isLeftMinorOfCarousel(){
+		return this.left + this.container.offsetWidth <= this.carousel.offsetWidth;
+	}
+
+	/**
+   * Event for move to previous item
+   *
+   * @method
+   * @name _handlePrevEvent
+   */
+	_handlePrevEvent() {
+		let prevEvent = new CustomEvent('previtemforlinked', {
+			detail: {
+				masterid: this.id,
+			},
+		});
+		document.dispatchEvent(prevEvent);
+	}
+
+	/**
+   * Go to prev item of carousel (only enter here if is master or slave carousel)
+   *
+   * @method
+   * @name _goPrev
+   */
+	_goPrev() {
+		this._handlePrevEvent();
+		
+    this.itemsWidth = this._getItemsWidth();
+    this.maxSlides = this._getMaxSlides();    
+    
+		if (this._isInitOfCarousel()) { 
         this.disabledPrevious = true;
     }
-		if (this.container.offsetWidth - this.left <= 0) {
+		if (this._hasSpaceForPrevSlide()) {
 			this.left -= this.maxSlides;
 		}
-		if (this.master || this.masterId != '') {
 			if (this.index > 0) {
         this.index--;
       }
       if(this.index == 0) {
         this.disabledPrevious = true;
-      }
-      this.left = 0;
-    }
+			}
+			if (this.disabledNext) {
+				this.disabledNext = false;
+			}
   }
-  
-	goToNextElement(ev) {
+	
+	/**
+   * Get max slides
+   *
+   * @method
+   * @name _getMaxSlides
+	 * @returns {Number}
+   */
+	_getMaxSlides(){
+		return (this.container.offsetWidth / this.itemsWidth) * this.itemsWidth;
+	}
+
+	/**
+   * Get items width
+   *
+   * @method
+   * @name _getItemsWidth
+	 * @returns {Number}
+   */
+	_getItemsWidth(){
+		return this.shadowRoot.querySelector('.media-carousel__list-item').offsetWidth;
+	}
+
+	/**
+   * Checked is the init of carousel
+   *
+   * @method
+   * @name _isInitOfCarousel
+	 * @returns {Boolean}
+   */
+	_isInitOfCarousel() {
+		return this.container.offsetWidth - this.left == 0;
+	}
+
+	/**
+   * Checked if has space for previous slide
+   *
+   * @method
+   * @name _hasSpaceForPrevSlide
+	 * @returns {Boolean}
+   */
+	_hasSpaceForPrevSlide() {
+		return this.container.offsetWidth - this.left <= 0;
+	}
+
+	/**
+   * Go to next element simulated click in next button in master id carousel
+   *
+   * @event
+   * @name _goToNextElement
+   */
+	_goToNextElement(ev) {
 		let masterId = ev.detail.masterid;
 		if (masterId === this.masterId) {
-
 			this.shadowRoot.querySelector('.media-carousel__arrow--right').click();
     }
   }
 
-	goToPrevElement(ev) {
+	/**
+   * Go to next element simulated click in previous button in master id carousel
+   *
+   * @event
+   * @name _goToPrevElement
+   */
+	_goToPrevElement(ev) {
 		let masterId = ev.detail.masterid;
 		if (masterId === this.masterId) {
 			this.shadowRoot.querySelector('.media-carousel__arrow--left').click();
@@ -390,11 +498,11 @@ export class MediaCarousel extends LitElement {
 							<!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
 							<div
 								?disabled="${this.disabledPrevious}"
-								class="media-carousel__button${this.master && !this.autorun
+								class="media-carousel__button--left media-carousel__button${this.master && !this.autorun
 									? ''
 									: ' hidden'}"
 								type="button"
-								@click="${this.goPrev}"
+								@click="${this._goPrev}"
 								aria-label="Go to previous element"
 							>
 								<img
@@ -410,13 +518,13 @@ export class MediaCarousel extends LitElement {
 							<!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
 							<div
 								?disabled="${this.disabledNext}"
-								class="media-carousel__button ${this.master && !this.autorun
+								class="media-carousel__button--rigth media-carousel__button ${this.master && !this.autorun
 									? ''
 									: 'hidden'}"
-								@click="${this.goNext}"
+								@click="${this._goNext}"
 								type="button"
 								aria-label="Go to next element"
-							>
+								>
 								<img
 									class="media-carousel__arrow media-carousel__arrow--right"
 									src="${this.iconRight}"

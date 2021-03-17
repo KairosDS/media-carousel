@@ -1,29 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
+
   <head>
     <title>media-carousel demo</title>
-    <meta name="description" content="Demo of carousel component">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="description" content="Demo of carousel component" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes" />
     <script type="module" src="../media-carousel.js"></script>
     <style>
       .blocks {
-        display:flex;
-        flex-direction:row;
+        display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
       }
+
       .block {
-        display:flex;
-        flex-direction:column;
+        display: flex;
+        flex-direction: column;
         flex-wrap: wrap;
         white-space: normal;
       }
+
       .code {
         padding: 20px;
-        color:#FFF; 
+        color: #fff;
         background: #000;
       }
+
       .attributes {
         padding-left: 20px;
       }
@@ -60,161 +64,426 @@
         <pre class="block attributes">
           <h3>Attributes</h3>
           <ul>
-            <li>property</li>
-            <li>property</li>
+            <li>media</li>
+            <li>mediaId</li>
+            <li>left</li>
+            <li>maxSlides</li>
+            <li>autorun</li>
+            <li>time</li>
+            <li>iconLeft</li>
+            <li>iconRight</li>
+            <li>disabledNext</li>
+            <li>disabledPrevious</li>
+            <li>master</li>
+            <li>masterId</li>
+            <li>showArrows</li>
+            <li>index</li>
+            <li>maxIndexOfArray</li>
           </ul>
         </pre>
       </div>
-      <!-- iconRight="https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2020/07/solar_orbiter_s_first_views_of_the_sun5/22136942-2-eng-GB/Solar_Orbiter_s_first_views_of_the_Sun_pillars.gif" -->
-      <!-- <media-carousel autorun>
-        <ul>
-        <li><p class="element1">1</p></li>
-        <li><p class="element2">2</p></li>
-        <li><p class="element3">3</p></li>
-        <li><p class="element4">4</p></li>
-        <li><p class="element5">5</p></li>
-        <li><p class="element6">6</p></li>
-        <li><p class="element7">7</p></li>
-        <li><p class="element8">8</p></li>
-        <li><p class="element9">9</p></li>
-      </ul>
-      </media-carousel>
-      <media-carousel id="themaster" master>
-        <ul>
-        <li><p class="element1">1</p></li>
-        <li><p class="element2">2</p></li>
-        <li><p class="element3">3</p></li>
-        <li><p class="element4">4</p></li>
-        <li><p class="element5">5</p></li>
-        <li><p class="element6">6</p></li>
-        <li><p class="element7">7</p></li>
-        <li><p class="element8">8</p></li>
-        <li><p class="element9">9</p></li>
-      </ul>
-      </media-carousel>
-      <media-carousel master-id="themaster">
-        <ul>
-        <li><p class="element1">1</p></li>
-        <li><p class="element2">2</p></li>
-        <li><p class="element3">3</p></li>
-        <li><p class="element4">4</p></li>
-        <li><p class="element5">5</p></li>
-        <li><p class="element6">6</p></li>
-        <li><p class="element7">7</p></li>
-        <li><p class="element8">8</p></li>
-        <li><p class="element9">9</p></li>
-      </ul>
-      </media-carousel>
-      <media-carousel master-id="themaster">
-        <ul>
-        <li><p class="element1">1</p></li>
-        <li><p class="element2">2</p></li>
-        <li><p class="element3">3</p></li>
-        <li><p class="element4">4</p></li>
-        <li><p class="element5">5</p></li>
-        <li><p class="element6">6</p></li>
-        <li><p class="element7">7</p></li>
-        <li><p class="element8">8</p></li>
-        <li><p class="element9">9</p></li>
-      </ul>
-      </media-carousel>
-      <media-carousel master-id="themaster">
-        <ul>
-        <li><p class="element1">1</p></li>
-        <li><p class="element2">2</p></li>
-        <li><p class="element3">3</p></li>
-        <li><p class="element4">4</p></li>
-        <li><p class="element5">5</p></li>
-        <li><p class="element6">6</p></li>
-        <li><p class="element7">7</p></li>
-        <li><p class="element8">8</p></li>
-        <li><p class="element9">9</p></li>
-      </ul>
-      </media-carousel>
-      <media-carousel id="themaster2" master>
-        <ul>
-        <li><p class="element1">1</p></li>
-        <li><p class="element2">2</p></li>
-        <li><p class="element3">3</p></li>
-        <li><p class="element4">4</p></li>
-        <li><p class="element5">5</p></li>
-        <li><p class="element6">6</p></li>
-        <li><p class="element7">7</p></li>
-        <li><p class="element8">8</p></li>
-        <li><p class="element9">9</p></li>
-      </ul>
-      </media-carousel>
-      <media-carousel master-id="themaster2">
-        <ul>
-        <li><p class="element1">1</p></li>
-        <li><p class="element2">2</p></li>
-        <li><p class="element3">3</p></li>
-        <li><p class="element4">4</p></li>
-        <li><p class="element5">5</p></li>
-        <li><p class="element6">6</p></li>
-        <li><p class="element7">7</p></li>
-        <li><p class="element8">8</p></li>
-        <li><p class="element9">9</p></li>
-      </ul>
-      </media-carousel> -->
+      <h2>Autorun carousel</h2>
       <div class="example1">
-      <media-carousel autorun>
-        <ul>
-        <li><img alt="logo client" src="../assets/logo-clients/azteca.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/bankia.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/bankinter.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/bbva.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/belcorp.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/billionhands.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/cecabank.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/cepsa.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/endesa.svg"/></li>
-        <li><img alt="logo client" href="hjbjhvg" src="../assets/logo-clients/lefebvre.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/oh.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/orange-bank.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/orange-x.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/pagos-fx.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/pelayo.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/repsol.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/santander.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/securitas.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/spotlight.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/telefonica.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/union-europea.svg"/></li>
-        <li><img alt="logo client" src="../assets/logo-clients/universia.svg"/></li>
-      </ul>
-      </media-carousel>
+        <media-carousel autorun>
+          <ul>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/azteca.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/bankia.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/bankinter.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/bbva.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/belcorp.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/billionhands.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/cecabank.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/cepsa.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/endesa.svg" />
+            </li>
+            <li>
+              <img alt="logo client" href="hjbjhvg" src="../assets/logo-clients/lefebvre.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/oh.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/orange-bank.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/orange-x.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/pagos-fx.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/pelayo.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/repsol.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/santander.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/securitas.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/spotlight.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/telefonica.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/union-europea.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/universia.svg" />
+            </li>
+          </ul>
+        </media-carousel>
       </div>
+      <h2>Manual master carousel without master-id</h2>
       <div class="example2">
-      <media-carousel id="manualMobile" master>
-        <ul>
-        <li><p class="element1">2014</p></li>
-        <li><p class="element2">2015</p></li>
-        <li><p class="element3">2016</p></li>
-        <li><p class="element4">2017</p></li>
-        <li><p class="element5">2018</p></li>
-        <li><p class="element6">2019</p></li>
-        <li><p class="element7">2020</p></li>
-        <li><p class="element8">2021</p></li>
-        <li><p class="element9">2022</p></li>
-        <li><p class="element10">2023</p></li>
-      </ul>
-      </media-carousel>
-      <media-carousel master-id="manualMobile">
-        <ul>
-        <li><p class="element1">1En septiembre había una ilusión, no existía ni un modelo de negocio validado, ni una propuesta de valor orientada hacia una boutique de Agilidad Empresarial y Producto Digital. Aún así, empezamos a trabajar en esa ilusión para convertirlo en idea, con la incorporación de los primeros equipos a finales de ese año. Esa idea pasó a ser valor.</p></li>
-        <li><p class="element2">2En enero tuvimos nuestro primer cliente, en abril el segundo. Empezaron las incorporaciones. Acabamos el año siendo más de 35 personas y, lo más importante, validamos que nuestra propuesta de valor tenía escala.</p></li>
-        <li><p class="element3">3Fue un año de escala a otras capacidades como DevOps o UX. Abrimos Kairós México y Kairós UK. Dos filiales a los 15 meses de existencia.</p></li>
-        <li><p class="element4">4Este año todos nos dimos cuenta de que, cuando pasas un volumen de talento (más de 100), países (3) y clientes (20), necesitas un equipo de gestión y una estructura organizativa que te permita escalar. Fue el año del equipo.</p></li>
-        <li><p class="element5">5Comenzamos el año con una gran ambición: duplicar compañía en España, escalar México y abrir Perú. Lo conseguimos.</p></li>
-        <li><p class="element6">6Seguimos con el plan estratégico, nos acercamos a los 30M de facturación en cinco países y conseguimos mantener nuestra marca empleadora, ese foco en el Kairosero como activo fundamental. Sin talento no eres nada en el mundo digital.</p></li>
-        <li><p class="element7">7Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque doloremque inventore, dicta accusantium nulla alias quia est corrupti adipisci sequi quasi quod aliquid error fuga aut consequatur ipsa. Laborum, accusamus!</p></li>
-        <li><p class="element8">8Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ab asperiores quod commodi, consectetur eaque tenetur culpa facilis modi, assumenda vel quibusdam dicta. Atque qui, iste dolorum maiores similique sapiente?</p></li>
-        <li><p class="element8">9999999Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ab asperiores quod commodi, consectetur eaque tenetur culpa facilis modi, assumenda vel quibusdam dicta. Atque qui, iste dolorum maiores similique sapiente?</p></li>
-
-      </ul>
-      </media-carousel>
-    </div>
+        <media-carousel master>
+          <ul>
+            <li>
+              <p class="element1">2014</p>
+            </li>
+            <li>
+              <p class="element2">2015</p>
+            </li>
+            <li>
+              <p class="element3">2016</p>
+            </li>
+            <li>
+              <p class="element4">2017</p>
+            </li>
+            <li>
+              <p class="element5">2018</p>
+            </li>
+            <li>
+              <p class="element6">2019</p>
+            </li>
+            <li>
+              <p class="element7">2020</p>
+            </li>
+            <li>
+              <p class="element8">2021</p>
+            </li>
+            <li>
+              <p class="element9">2022</p>
+            </li>
+            <li>
+              <p class="element10">2023</p>
+            </li>
+          </ul>
+        </media-carousel>
+      </div>
+      <h2>Manual carousel with master and master-id</h2>
+      <div class="example2">
+        <media-carousel id="manualMobile" master>
+          <ul>
+            <li>
+              <p class="element1">2014</p>
+            </li>
+            <li>
+              <p class="element2">2015</p>
+            </li>
+            <li>
+              <p class="element3">2016</p>
+            </li>
+            <li>
+              <p class="element4">2017</p>
+            </li>
+            <li>
+              <p class="element5">2018</p>
+            </li>
+            <li>
+              <p class="element6">2019</p>
+            </li>
+            <li>
+              <p class="element7">2020</p>
+            </li>
+            <li>
+              <p class="element8">2021</p>
+            </li>
+            <li>
+              <p class="element9">2022</p>
+            </li>
+            <li>
+              <p class="element10">2023</p>
+            </li>
+          </ul>
+        </media-carousel>
+        <media-carousel master-id="manualMobile">
+          <ul>
+            <li>
+              <p class="element1">
+                1En septiembre había una ilusión, no existía ni un modelo de
+                negocio validado, ni una propuesta de valor orientada hacia una
+                boutique de Agilidad Empresarial y Producto Digital. Aún así,
+                empezamos a trabajar en esa ilusión para convertirlo en idea,
+                con la incorporación de los primeros equipos a finales de ese
+                año. Esa idea pasó a ser valor.
+              </p>
+            </li>
+            <li>
+              <p class="element2">
+                2En enero tuvimos nuestro primer cliente, en abril el segundo.
+                Empezaron las incorporaciones. Acabamos el año siendo más de 35
+                personas y, lo más importante, validamos que nuestra propuesta
+                de valor tenía escala.
+              </p>
+            </li>
+            <li>
+              <p class="element3">
+                3Fue un año de escala a otras capacidades como DevOps o UX.
+                Abrimos Kairós México y Kairós UK. Dos filiales a los 15 meses
+                de existencia.
+              </p>
+            </li>
+            <li>
+              <p class="element4">
+                4Este año todos nos dimos cuenta de que, cuando pasas un volumen
+                de talento (más de 100), países (3) y clientes (20), necesitas
+                un equipo de gestión y una estructura organizativa que te
+                permita escalar. Fue el año del equipo.
+              </p>
+            </li>
+            <li>
+              <p class="element5">
+                5Comenzamos el año con una gran ambición: duplicar compañía en
+                España, escalar México y abrir Perú. Lo conseguimos.
+              </p>
+            </li>
+            <li>
+              <p class="element6">
+                6Seguimos con el plan estratégico, nos acercamos a los 30M de
+                facturación en cinco países y conseguimos mantener nuestra marca
+                empleadora, ese foco en el Kairosero como activo fundamental.
+                Sin talento no eres nada en el mundo digital.
+              </p>
+            </li>
+            <li>
+              <p class="element7">
+                7Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
+                doloremque inventore, dicta accusantium nulla alias quia est
+                corrupti adipisci sequi quasi quod aliquid error fuga aut
+                consequatur ipsa. Laborum, accusamus!
+              </p>
+            </li>
+            <li>
+              <p class="element8">
+                8Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                ab asperiores quod commodi, consectetur eaque tenetur culpa
+                facilis modi, assumenda vel quibusdam dicta. Atque qui, iste
+                dolorum maiores similique sapiente?
+              </p>
+            </li>
+          </ul>
+        </media-carousel>
+      </div>
+      <h2>Manual carousel with master and two master-id</h2>
+      <div class="example2">
+        <media-carousel id="manualMobile2" master>
+          <ul>
+            <li>
+              <p class="element1">2014</p>
+            </li>
+            <li>
+              <p class="element2">2015</p>
+            </li>
+            <li>
+              <p class="element3">2016</p>
+            </li>
+            <li>
+              <p class="element4">2017</p>
+            </li>
+            <li>
+              <p class="element5">2018</p>
+            </li>
+            <li>
+              <p class="element6">2019</p>
+            </li>
+            <li>
+              <p class="element7">2020</p>
+            </li>
+            <li>
+              <p class="element8">2021</p>
+            </li>
+            <li>
+              <p class="element9">2022</p>
+            </li>
+            <li>
+              <p class="element10">2023</p>
+            </li>
+          </ul>
+        </media-carousel>
+        <media-carousel master-id="manualMobile2">
+          <ul>
+            <li>
+              <p class="element1">
+                1En septiembre había una ilusión, no existía ni un modelo de
+                negocio validado, ni una propuesta de valor orientada hacia una
+                boutique de Agilidad Empresarial y Producto Digital. Aún así,
+                empezamos a trabajar en esa ilusión para convertirlo en idea,
+                con la incorporación de los primeros equipos a finales de ese
+                año. Esa idea pasó a ser valor.
+              </p>
+            </li>
+            <li>
+              <p class="element2">
+                2En enero tuvimos nuestro primer cliente, en abril el segundo.
+                Empezaron las incorporaciones. Acabamos el año siendo más de 35
+                personas y, lo más importante, validamos que nuestra propuesta
+                de valor tenía escala.
+              </p>
+            </li>
+            <li>
+              <p class="element3">
+                3Fue un año de escala a otras capacidades como DevOps o UX.
+                Abrimos Kairós México y Kairós UK. Dos filiales a los 15 meses
+                de existencia.
+              </p>
+            </li>
+            <li>
+              <p class="element4">
+                4Este año todos nos dimos cuenta de que, cuando pasas un volumen
+                de talento (más de 100), países (3) y clientes (20), necesitas
+                un equipo de gestión y una estructura organizativa que te
+                permita escalar. Fue el año del equipo.
+              </p>
+            </li>
+            <li>
+              <p class="element5">
+                5Comenzamos el año con una gran ambición: duplicar compañía en
+                España, escalar México y abrir Perú. Lo conseguimos.
+              </p>
+            </li>
+            <li>
+              <p class="element6">
+                6Seguimos con el plan estratégico, nos acercamos a los 30M de
+                facturación en cinco países y conseguimos mantener nuestra marca
+                empleadora, ese foco en el Kairosero como activo fundamental.
+                Sin talento no eres nada en el mundo digital.
+              </p>
+            </li>
+            <li>
+              <p class="element7">
+                7Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
+                doloremque inventore, dicta accusantium nulla alias quia est
+                corrupti adipisci sequi quasi quod aliquid error fuga aut
+                consequatur ipsa. Laborum, accusamus!
+              </p>
+            </li>
+            <li>
+              <p class="element8">
+                8Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                ab asperiores quod commodi, consectetur eaque tenetur culpa
+                facilis modi, assumenda vel quibusdam dicta. Atque qui, iste
+                dolorum maiores similique sapiente?
+              </p>
+            </li>
+            <li>
+              <p class="element8">
+                9999999Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eius ab asperiores quod commodi, consectetur eaque tenetur culpa
+                facilis modi, assumenda vel quibusdam dicta. Atque qui, iste
+                dolorum maiores similique sapiente?
+              </p>
+            </li>
+          </ul>
+        </media-carousel>
+        <media-carousel master-id="manualMobile2">
+          <ul>
+            <li>
+              <p class="element1">
+                1En septiembre había una ilusión, no existía ni un modelo de
+                negocio validado, ni una propuesta de valor orientada hacia una
+                boutique de Agilidad Empresarial y Producto Digital. Aún así,
+                empezamos a trabajar en esa ilusión para convertirlo en idea,
+                con la incorporación de los primeros equipos a finales de ese
+                año. Esa idea pasó a ser valor.
+              </p>
+            </li>
+            <li>
+              <p class="element2">
+                2En enero tuvimos nuestro primer cliente, en abril el segundo.
+                Empezaron las incorporaciones. Acabamos el año siendo más de 35
+                personas y, lo más importante, validamos que nuestra propuesta
+                de valor tenía escala.
+              </p>
+            </li>
+            <li>
+              <p class="element3">
+                3Fue un año de escala a otras capacidades como DevOps o UX.
+                Abrimos Kairós México y Kairós UK. Dos filiales a los 15 meses
+                de existencia.
+              </p>
+            </li>
+            <li>
+              <p class="element4">
+                4Este año todos nos dimos cuenta de que, cuando pasas un volumen
+                de talento (más de 100), países (3) y clientes (20), necesitas
+                un equipo de gestión y una estructura organizativa que te
+                permita escalar. Fue el año del equipo.
+              </p>
+            </li>
+            <li>
+              <p class="element5">
+                5Comenzamos el año con una gran ambición: duplicar compañía en
+                España, escalar México y abrir Perú. Lo conseguimos.
+              </p>
+            </li>
+            <li>
+              <p class="element6">
+                6Seguimos con el plan estratégico, nos acercamos a los 30M de
+                facturación en cinco países y conseguimos mantener nuestra marca
+                empleadora, ese foco en el Kairosero como activo fundamental.
+                Sin talento no eres nada en el mundo digital.
+              </p>
+            </li>
+            <li>
+              <p class="element7">
+                7Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
+                doloremque inventore, dicta accusantium nulla alias quia est
+                corrupti adipisci sequi quasi quod aliquid error fuga aut
+                consequatur ipsa. Laborum, accusamus!
+              </p>
+            </li>
+            <li>
+              <p class="element8">
+                8Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+                ab asperiores quod commodi, consectetur eaque tenetur culpa
+                facilis modi, assumenda vel quibusdam dicta. Atque qui, iste
+                dolorum maiores similique sapiente?
+              </p>
+            </li>
+            <li>
+              <p class="element8">
+                9999999Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eius ab asperiores quod commodi, consectetur eaque tenetur culpa
+                facilis modi, assumenda vel quibusdam dicta. Atque qui, iste
+                dolorum maiores similique sapiente?
+              </p>
+            </li>
+          </ul>
+        </media-carousel>
+      </div>
     </div>
   </body>
+
 </html>

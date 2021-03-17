@@ -29,9 +29,15 @@ export const wcNameStyles = css`
 	}
 
 	/* AUTORUN CAROUSEL MOBILE */
-	.media-carousel__content {
+	:host([autorun]) .media-carousel__content{
+
 		display: flex;
 		justify-content: center;
+		text-align: center;
+
+	}
+	.media-carousel__content {
+		display: flex;
 		text-align: center;
 	}
 
@@ -172,9 +178,8 @@ export const wcNameStyles = css`
     line-height: 24px;
     color: var(--text-color);
     margin-top: 31px;
-    margin: 0;
+    margin: 0 15px;
 		text-align: initial;
-    margin-left: 15px;
 	}
 
 	.media-carousel__list--manual.media-carousel__list--master-id.media-carousel__list .media-carousel__list-item p {
@@ -203,7 +208,7 @@ export const wcNameStyles = css`
 
 	@media all and (min-width: 768px) {
 
-		.media-carousel__list-item img{
+	.media-carousel__list-item img{
 			width: 200px;
 	}
 
@@ -214,6 +219,10 @@ export const wcNameStyles = css`
 	:host([autorun]) {
 		display: flex;
     justify-content: center;
+	}
+
+	.media-carousel__list--master-id .media-carousel__list-item p {
+    margin: 0 0 0 15px;
 	}
 
 `;
