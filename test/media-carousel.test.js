@@ -8,7 +8,7 @@ import "../media-carousel";
 
 
 const el = await fixture(html` 
-      <media-carousel>
+      <media-carousel >
       <ul>
         <li><img alt="logo client" src="../assets/logo-clients/azteca.svg"/></li>
         <li><img alt="logo client" src="../assets/logo-clients/bankia.svg"/></li>
@@ -17,6 +17,33 @@ const el = await fixture(html`
         <li><img alt="logo client" src="../assets/logo-clients/belcorp.svg"/></li>
       </ul>
       </media-carousel> `);
+
+const elMasterNoSlaves = await fixture(html`
+  <media-carousel id="no-slaves" master>
+          <ul>
+            <li>
+              <p class="element1">Content One</p>
+            </li>
+            <li>
+              <p class="element2">Content Two</p>
+            </li>
+          </ul>
+        </media-carousel>
+`);
+
+
+const elManualNoImg = await fixture(html` 
+      <media-carousel >
+      <ul>
+      <li>
+              <p class="element1">Content One</p>
+            </li>
+            <li>
+              <p class="element2">Content Two</p>
+            </li>
+        </ul>
+      </media-carousel> `);
+
 
 const elMasterId = await fixture(html`
   <media-carousel master-id="manualMobile">
@@ -81,9 +108,9 @@ const elMaster = await fixture(html`
 `);
 
 const elAutorun = await fixture(html`
- <media-carousel autorun>
+ <media-carousel autorun master>
           <ul>
-            <li>
+          <li>
               <img alt="logo client" src="../assets/logo-clients/azteca.svg" />
             </li>
             <li>
@@ -98,6 +125,57 @@ const elAutorun = await fixture(html`
             <li>
               <img alt="logo client" src="../assets/logo-clients/belcorp.svg" />
             </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/billionhands.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/cecabank.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/cepsa.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/endesa.svg" />
+            </li>
+            <li>
+              <img alt="logo client" href="hjbjhvg" src="../assets/logo-clients/lefebvre.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/oh.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/orange-bank.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/orange-x.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/pagos-fx.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/pelayo.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/repsol.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/santander.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/securitas.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/spotlight.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/telefonica.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/union-europea.svg" />
+            </li>
+            <li>
+              <img alt="logo client" src="../assets/logo-clients/universia.svg" />
+            </li>
           </ul>
         </media-carousel>
 `)
@@ -109,28 +187,18 @@ describe("MediaCarousel", () => {
     expect(base).not.to.be.null;
   });
 
-  // it('Go next item: Called _goNext method', async () => {
-  //   const spy = sinon.spy(el, '_goNext');
-  //   const button = el.shadowRoot.querySelector('.media-carousel__button--rigth');
+  it('should button prev has disabled property', async () => {
+    const buttonPrev = elMaster.shadowRoot.querySelector('.media-carousel__button--left');
+    
+    expect(buttonPrev).has.attribute('disabled');
 
-  //   button.click();
-  //   setTimeout(() => {
-  //     expect(spy.called).to.be.true;
-  //   }, 200);
-  //   expect(spy.called).to.be.false;
+  });
+  it('should button next has not disabled property', async () => {
+    const buttonNext = elMaster.shadowRoot.querySelector('.media-carousel__button--rigth');
+ 
+    expect(buttonNext).has.not.attribute('disabled');
+  });
 
-  // });
-
-  // it('Go next item: Called _goPrev method', async (done) => {
-  //   const spy = sinon.spy(el, '_goPrev');
-  //   const button = el.shadowRoot.querySelector('.media-carousel__button--left');
-
-  //   button.click();
-  //   setTimeout(() => {
-  //     expect(spy.called).to.be.true;
-  //   }, 200);
-  //   expect(spy.called).to.be.false;
-  // });
 
   it('Go next item: Called _goNext method when clicked button rigth', async () => {
     const spy = sinon.spy(el, '_goNext');
@@ -153,10 +221,10 @@ describe("MediaCarousel", () => {
   });  
 
   it('should call _handlePrevEvent with "previtemforlinked" event', async () => {
-    const handleFieldChangeStub = stub(elMasterId, '_handlePrevEvent');
-    elMasterId.shadowRoot.querySelector('.media-carousel__arrow--left').click();
+    const handleFieldChangeStub = stub(elMaster, '_handlePrevEvent');
+    elMaster.shadowRoot.querySelector('.media-carousel__arrow--left').click();
 
-    setTimeout(() => elMasterId.dispatchEvent(new CustomEvent('previtemforlinked', { detail: 'done' })));
+    setTimeout(() => elMasterId.dispatchEvent(new CustomEvent('previtemforlinked', { detail: { masterid : 'manualMobile'}  })));
     await oneEvent(elMasterId, 'previtemforlinked');
 
     expect(handleFieldChangeStub).to.have.callCount(1);
@@ -166,11 +234,45 @@ describe("MediaCarousel", () => {
     const handleFieldChangeStub = stub(elMaster, '_handleNextEvent');
     elMaster.shadowRoot.querySelector('.media-carousel__arrow--right').click();
 
-    setTimeout(() => elMaster.dispatchEvent(new CustomEvent('nextitemforlinked', { detail: 'done' })));
-    await oneEvent(elMaster, 'nextitemforlinked');
+    setTimeout(() => elMasterId.dispatchEvent(new CustomEvent('nextitemforlinked', { detail : { masterid : 'manualMobile'} })));
+    await oneEvent(elMasterId, 'nextitemforlinked');
 
     expect(handleFieldChangeStub).to.have.callCount(1);
   });
+
+  it('Set max of array when master has not children', async () => {
+    const itemsOfMasterNoSlaves = elMasterNoSlaves.shadowRoot.querySelectorAll('li').length;
+    
+    expect(itemsOfMasterNoSlaves).to.equal(2);
+  });
+  
+  it('Go last item: Called _goNext method when clicked button rigth', async () => {
+    const spy = sinon.spy(elMaster, '_goNext');
+    elMaster.requestUpdate();
+    await elMaster.updateComplete;
+    const numberOfItems = elMaster.querySelectorAll('li').length;
+ 
+    for(let i =0;i <= numberOfItems - 1;i++){
+      elMaster.shadowRoot.querySelector('.media-carousel__button--rigth').click();
+    }
+    expect(spy).to.have.callCount(numberOfItems);
+  });
+
+  it('Go first item: Called _goPrev method when clicked button left', async () => {
+    const spy = sinon.spy(elMaster, '_goPrev');
+    elMaster.requestUpdate();
+    await elMaster.updateComplete;
+    const numberOfItems = elMaster.querySelectorAll('li').length;
+ 
+    for(let i =0;i <= numberOfItems - 1;i++){
+      elMaster.shadowRoot.querySelector('.media-carousel__button--left').click();
+    }
+    expect(spy).to.have.callCount(numberOfItems);
+  });
+
+  it('shoud not be the end of array', async () => {
+    expect(elAutorun._isLeftMinorOfCarousel()).to.equal(true);
+ });
 
 });
 

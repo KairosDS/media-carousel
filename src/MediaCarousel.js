@@ -111,7 +111,7 @@ export class MediaCarousel extends LitElement {
 			 * @type { Boolean }
 			 */
 			disabledPrevious: {
-				type: Boolean,
+				type: Boolean
 			},
 
 			/**
@@ -279,7 +279,7 @@ export class MediaCarousel extends LitElement {
 			if (this._isEndOfArray()){
 				this.items = this.items.concat(this.items);
 			}
-			if (this._isLeftMinorOfCarousel) {
+			if (this._isLeftMinorOfCarousel()) {
 				this.left += this.container.offsetWidth + GAP_ITEMS;
 			}
 		}
@@ -518,9 +518,9 @@ export class MediaCarousel extends LitElement {
 							<!-- The div tag has been used instead of the button tag so that when someone uses a screen reader it takes the elements as a list to make it more accessible -->
 							<div
 								?disabled="${this.disabledNext}"
-								class="media-carousel__button--rigth media-carousel__button ${this.master && !this.autorun
+								class="media-carousel__button--rigth media-carousel__button${this.master && !this.autorun
 									? ''
-									: 'hidden'}"
+									: ' hidden'}"
 								@click="${this._goNext}"
 								type="button"
 								aria-label="Go to next element"
