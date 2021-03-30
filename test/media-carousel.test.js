@@ -31,20 +31,6 @@ const elMasterNoSlaves = await fixture(html`
         </media-carousel>
 `);
 
-
-const elManualNoImg = await fixture(html` 
-      <media-carousel >
-      <ul>
-      <li>
-              <p class="element1">Content One</p>
-            </li>
-            <li>
-              <p class="element2">Content Two</p>
-            </li>
-        </ul>
-      </media-carousel> `);
-
-
 const elMasterId = await fixture(html`
   <media-carousel master-id="manualMobile">
           <ul>
@@ -220,7 +206,7 @@ describe("MediaCarousel", () => {
     expect(spy).to.have.callCount(2);
   });  
 
-  it('should call _handlePrevEvent with "previtemforlinked" event', async () => {
+  it('should be call _handlePrevEvent with "previtemforlinked" event', async () => {
     const handleFieldChangeStub = stub(elMaster, '_handlePrevEvent');
     elMaster.shadowRoot.querySelector('.media-carousel__arrow--left').click();
 
@@ -230,7 +216,7 @@ describe("MediaCarousel", () => {
     expect(handleFieldChangeStub).to.have.callCount(1);
   });
 
-  it('should call _handleNextEvent with "nextitemforlinked" event', async () => {
+  it('should be call _handleNextEvent with "nextitemforlinked" event', async () => {
     const handleFieldChangeStub = stub(elMaster, '_handleNextEvent');
     elMaster.shadowRoot.querySelector('.media-carousel__arrow--right').click();
 
@@ -251,7 +237,7 @@ describe("MediaCarousel", () => {
     elMaster.requestUpdate();
     await elMaster.updateComplete;
     const numberOfItems = elMaster.querySelectorAll('li').length;
- 
+
     for(let i =0;i <= numberOfItems - 1;i++){
       elMaster.shadowRoot.querySelector('.media-carousel__button--rigth').click();
     }
@@ -263,7 +249,7 @@ describe("MediaCarousel", () => {
     elMaster.requestUpdate();
     await elMaster.updateComplete;
     const numberOfItems = elMaster.querySelectorAll('li').length;
- 
+
     for(let i =0;i <= numberOfItems - 1;i++){
       elMaster.shadowRoot.querySelector('.media-carousel__button--left').click();
     }
@@ -272,7 +258,48 @@ describe("MediaCarousel", () => {
 
   it('shoud not be the end of array', async () => {
     expect(elAutorun._isLeftMinorOfCarousel()).to.equal(true);
- });
+  });
+
+  it('shoud be the end of array', async () => {
+    elAutorun.requestUpdate();
+    await elAutorun.updateComplete;
+    const numberOfItems = elAutorun.querySelectorAll('li').length;
+
+    for(let i =0;i <= numberOfItems - 1;i++){
+      elAutorun._handleNextEvent();
+    }
+    expect(elAutorun._isEndOfArray()).to.equal(true);
+  });
+
+  it('Should be called _goToNextElement method when clicked arrow rigth', async () => {
+    const spy = sinon.spy(elMasterId, '_goToNextElement');
+    elMasterId.requestUpdate();
+    await elMasterId.updateComplete;
+
+    let event = {
+      detail: {
+        masterid: 'manualMobile'
+      }
+    }
+    elMasterId.shadowRoot.querySelector('.media-carousel__arrow--right').click();
+      elMasterId._goToNextElement(event);
+    expect(spy).to.have.callCount(1);
+  });
+
+  it('Should be called _goToPrevtElement method when clicked arrow left', async () => {
+    const spy = sinon.spy(elMasterId, '_goToPrevElement');
+    elMasterId.requestUpdate();
+    await elMasterId.updateComplete;
+
+    let event = {
+      detail: {
+        masterid: 'manualMobile'
+      }
+    }
+    elMasterId.shadowRoot.querySelector('.media-carousel__arrow--left').click();
+      elMasterId._goToPrevElement(event);
+    expect(spy).to.have.callCount(1);
+  });
 
 });
 
